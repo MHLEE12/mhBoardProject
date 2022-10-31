@@ -1,4 +1,4 @@
-package com.mhboard;
+package com.mhboard.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

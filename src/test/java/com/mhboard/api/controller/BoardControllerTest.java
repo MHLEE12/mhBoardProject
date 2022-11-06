@@ -45,9 +45,8 @@ class BoardControllerTest {
 
         // expected
         mockMvc.perform(post("/board")
-                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                        .param("title", "글제목입니다.")
-                        .param("content", "글 내용입니다.")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"title\": \"제목입니다.\", \"content\": \"내용입니다.\"}")
                 )
                 .andExpect(status().isOk())
                 .andExpect(content().string("Hello World!"))

@@ -10,16 +10,13 @@ import java.util.Map;
 @RestController
 public class BoardController {
 
-    // Http Method
-    // GET, POST, PUT, DELETE, PATCH, OPTIONS, HEAD, TRACE, CONNECT
-
 //    @GetMapping("/board")
 //    public String get() {
 //        return "Hello World!";
 //    }
 
     @PostMapping("/board")
-    public String board(@ModelAttribute BoardWrite params) {
+    public String board(@RequestBody BoardWrite params) {
         //@ModelAttribute 생략가능
         log.info("params={}", params.toString());
         return "Hello World!";

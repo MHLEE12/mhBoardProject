@@ -1,15 +1,28 @@
 package com.mhboard.api.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.mhboard.api.request.BoardWrite;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
+@Slf4j
 @RestController
 public class BoardController {
 
-    @GetMapping("/board")
-    public String get() {
+    // Http Method
+    // GET, POST, PUT, DELETE, PATCH, OPTIONS, HEAD, TRACE, CONNECT
+
+//    @GetMapping("/board")
+//    public String get() {
+//        return "Hello World!";
+//    }
+
+    @PostMapping("/board")
+    public String board(@ModelAttribute BoardWrite params) {
+        //@ModelAttribute 생략가능
+        log.info("params={}", params.toString());
         return "Hello World!";
     }
-
 
 }

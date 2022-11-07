@@ -1,26 +1,20 @@
 package com.mhboard.api.request;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
+import javax.validation.constraints.NotBlank;
+
 @ToString
+@Setter
+@Getter
 public class BoardWrite {
 
-    public String title;
-    public String content;
+    @NotBlank(message = "제목을 입력해주세요.")
+    private String title;
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    @NotBlank(message = "내용을 입력해주세요.")
+    private String content;
 
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    //    @Override
-//    public String toString() {
-//        return "BoardWrite{" +
-//                "title='" + title + '\'' +
-//                ", content='" + content + '\'' +
-//                '}';
-//    }
 }

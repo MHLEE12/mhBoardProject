@@ -1,2 +1,7 @@
 server:
   port: 9090
+
+#  Spring Test MockMvc 한글깨짐 해결
+  servlet:
+    encoding:
+      force-response: true

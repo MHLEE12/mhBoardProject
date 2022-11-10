@@ -21,19 +21,19 @@ public class BoardController {
 //    }
 
     @PostMapping("/board")
-    public Map<String, String> board(@RequestBody @Valid BoardWrite params, BindingResult result) {
+    public Map<String, String> board(@RequestBody @Valid BoardWrite params) {
 //        log.info("params={}", params.toString());
-        if(result.hasErrors()) {
-            // 에러 메세지를 json 형태로!
-            List<FieldError> fieldErrors = result.getFieldErrors();
-            FieldError firstFieldError = fieldErrors.get(0);
-            String fieldName = firstFieldError.getField(); // title
-            String errorMessage = firstFieldError.getDefaultMessage(); // 에러 메세지
-
-            Map<String, String> error = new HashMap<>();
-            error.put(fieldName, errorMessage);
-            return error;
-        }
+//        if(result.hasErrors()) {
+//            // 에러 메세지를 json 형태로!
+//            List<FieldError> fieldErrors = result.getFieldErrors();
+//            FieldError firstFieldError = fieldErrors.get(0);
+//            String fieldName = firstFieldError.getField(); // title
+//            String errorMessage = firstFieldError.getDefaultMessage(); // 에러 메세지
+//
+//            Map<String, String> error = new HashMap<>();
+//            error.put(fieldName, errorMessage);
+//            return error;
+//        }
 
         return Map.of();
     }

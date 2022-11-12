@@ -14,26 +14,10 @@ import java.util.Map;
 @Slf4j
 @RestController
 public class BoardController {
-
-//    @GetMapping("/board")
-//    public String get() {
-//        return "Hello World!";
-//    }
-
+    
     @PostMapping("/board")
     public Map<String, String> board(@RequestBody @Valid BoardWrite params) {
-//        log.info("params={}", params.toString());
-//        if(result.hasErrors()) {
-//            // 에러 메세지를 json 형태로!
-//            List<FieldError> fieldErrors = result.getFieldErrors();
-//            FieldError firstFieldError = fieldErrors.get(0);
-//            String fieldName = firstFieldError.getField(); // title
-//            String errorMessage = firstFieldError.getDefaultMessage(); // 에러 메세지
-//
-//            Map<String, String> error = new HashMap<>();
-//            error.put(fieldName, errorMessage);
-//            return error;
-//        }
+
 
         return Map.of();
     }

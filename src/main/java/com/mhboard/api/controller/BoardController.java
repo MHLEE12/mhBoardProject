@@ -22,11 +22,13 @@ public class BoardController {
     private final BoardService boardService;
 
     @PostMapping("/board")
-    public Board board(@RequestBody @Valid BoardWrite request) {
+    public Map board(@RequestBody @Valid BoardWrite request) {
         // Case1. 저장한 데이터 Entity -> response로 응답하기
+        // Case2. 저장한 데이터의 primary_id ->response로 응답하기
+        //        Client에서는 수신한 id를 글 조회 API를 통해서 글 데이터를 수신받음
 
-
-        return boardService.write(request);
+        Long boardNo = boardService.write(request);
+        return Map.of("boardNo", boardNo);
     }
 
 }

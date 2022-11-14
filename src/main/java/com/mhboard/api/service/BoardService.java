@@ -14,16 +14,13 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
 
-    public Long write(BoardWrite boardWrite) {
+    public void write(BoardWrite boardWrite) {
         // boardWrite(DTO) -> Entity 형태로 변환
         Board board = Board.builder()
                 .title(boardWrite.getTitle())
                 .content(boardWrite.getContent())
                 .build();
         boardRepository.save(board);
-
-        return board.getNo();
-
     }
 
 }

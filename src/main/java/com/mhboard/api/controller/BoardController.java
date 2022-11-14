@@ -1,5 +1,6 @@
 package com.mhboard.api.controller;
 
+import com.mhboard.api.domain.Board;
 import com.mhboard.api.request.BoardWrite;
 import com.mhboard.api.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -21,10 +22,11 @@ public class BoardController {
     private final BoardService boardService;
 
     @PostMapping("/board")
-    public Map<String, String> board(@RequestBody @Valid BoardWrite request) {
-        boardService.write(request);
+    public Board board(@RequestBody @Valid BoardWrite request) {
+        // Case1. 저장한 데이터 Entity -> response로 응답하기
 
-        return Map.of();
+
+        return boardService.write(request);
     }
 
 }

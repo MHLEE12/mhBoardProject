@@ -14,10 +14,14 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
 
-    public void write(BoardWrite boardWrite) {
+    public Board write(BoardWrite boardWrite) {
         // boardWrite(DTO) -> Entity 형태로 변환
-        Board board = new Board(boardWrite.getTitle(), boardWrite.getContent());
-        boardRepository.save(board);
+        Board board = Board.builder()
+                .title(boardWrite.getTitle())
+                .content(boardWrite.getContent())
+                .build();
+
+        return boardRepository.save(board);
 
     }
 

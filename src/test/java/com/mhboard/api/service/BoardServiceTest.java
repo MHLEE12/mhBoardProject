@@ -4,6 +4,7 @@ import com.mhboard.api.domain.Board;
 import com.mhboard.api.repository.BoardRepository;
 import com.mhboard.api.request.BoardWrite;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,11 @@ class BoardServiceTest {
 
     @Autowired
     private BoardRepository boardRepository;
+
+    @BeforeEach
+    void clean() {
+        boardRepository.deleteAll();
+    }
 
     @Test
     @DisplayName("글 작성")
@@ -38,4 +44,26 @@ class BoardServiceTest {
         assertEquals("제목입니다.", board.getTitle());
         assertEquals("내용입니다.", board.getContent());
     }
+
+    @Test
+    @DisplayName("글 1개 조회")
+    void test2() {
+        // given
+        Board saveBoard = Board.builder()
+                .title("제목")
+                .content("내용")
+                .build();
+        boardRepository.save(saveBoard);
+
+        // when
+        Board board = boardService.get(saveBoard.getNo());
+
+        //then
+        assertNotNull(board);
+        assertEquals(1L, boardRepository.count());
+        assertEquals("제목", board.getTitle());
+        assertEquals("내용", board.getContent());
+    }
+
+
 }

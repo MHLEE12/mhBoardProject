@@ -3,6 +3,7 @@ package com.mhboard.api.service;
 import com.mhboard.api.domain.Board;
 import com.mhboard.api.repository.BoardRepository;
 import com.mhboard.api.request.BoardWrite;
+import com.mhboard.api.response.BoardResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,10 +26,16 @@ public class BoardService {
         boardRepository.save(board);
     }
 
-    public Board get(Long boardId) {
+    public BoardResponse get(Long boardId) {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글 입니다."));
 
-        return board;
+        BoardResponse response = BoardResponse.builder()
+                .no(board.getNo())
+                .title(board.getTitle())
+                .content(board.getContent())
+                .build();
+
+        return response;
     }
 }

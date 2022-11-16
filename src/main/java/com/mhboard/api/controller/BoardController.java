@@ -2,6 +2,7 @@ package com.mhboard.api.controller;
 
 import com.mhboard.api.domain.Board;
 import com.mhboard.api.request.BoardWrite;
+import com.mhboard.api.response.BoardResponse;
 import com.mhboard.api.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,9 +38,10 @@ public class BoardController {
 
     // 글 1개 조회
     @GetMapping("/boards/{no}")
-    public Board get(@PathVariable Long no) {
-        Board board = boardService.get(no);
-        return board;
+    public BoardResponse get(@PathVariable Long no) {
+
+        BoardResponse response = boardService.get(no);
+        return response;
     }
 
 

@@ -3,6 +3,7 @@ package com.mhboard.api.service;
 import com.mhboard.api.domain.Board;
 import com.mhboard.api.repository.BoardRepository;
 import com.mhboard.api.request.BoardWrite;
+import com.mhboard.api.response.BoardResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -56,13 +57,13 @@ class BoardServiceTest {
         boardRepository.save(saveBoard);
 
         // when
-        Board board = boardService.get(saveBoard.getNo());
+        BoardResponse response = boardService.get(saveBoard.getNo());
 
         //then
-        assertNotNull(board);
+        assertNotNull(response);
         assertEquals(1L, boardRepository.count());
-        assertEquals("제목", board.getTitle());
-        assertEquals("내용", board.getContent());
+        assertEquals("제목", response.getTitle());
+        assertEquals("내용", response.getContent());
     }
 
 

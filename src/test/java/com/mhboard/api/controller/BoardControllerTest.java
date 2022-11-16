@@ -114,7 +114,7 @@ class BoardControllerTest {
     void search_one_board_test() throws Exception {
         // given
         Board board = Board.builder()
-                .title("제목")
+                .title("123456789012345")
                 .content("내용")
                 .build();
         boardRepository.save(board);
@@ -124,7 +124,7 @@ class BoardControllerTest {
                         .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.no").value(board.getNo()))
-                .andExpect(jsonPath("$.title").value("제목"))
+                .andExpect(jsonPath("$.title").value("1234567890"))
                 .andExpect(jsonPath("$.content").value("내용"))
                 .andDo(print());
 

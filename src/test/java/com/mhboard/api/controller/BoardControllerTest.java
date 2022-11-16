@@ -13,7 +13,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.http.MediaType.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -49,13 +51,13 @@ class BoardControllerTest {
 //        System.out.println("json = " + json);
 
         // expected
-        mockMvc.perform(post("/board")
-                        .contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("/boards")
+                        .contentType(APPLICATION_JSON)
                         .content(json)
                 )
                 .andExpect(status().isOk())
                 .andExpect(content().string(""))
-                .andDo(MockMvcResultHandlers.print());
+                .andDo(print());
     }
 
     @Test
@@ -69,15 +71,15 @@ class BoardControllerTest {
         String json = objectMapper.writeValueAsString(request);
 
         // expected
-        mockMvc.perform(post("/board")
-                        .contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("/boards")
+                        .contentType(APPLICATION_JSON)
                         .content(json)
                 )
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.code").value("400"))
                 .andExpect(jsonPath("$.message").value("잘못된 요청입니다."))
                 .andExpect(jsonPath("$.validation.title").value("제목을 입력해주세요."))
-                .andDo(MockMvcResultHandlers.print());
+                .andDo(print());
     }
 
     @Test
@@ -92,12 +94,12 @@ class BoardControllerTest {
         String json = objectMapper.writeValueAsString(request);
 
         // when
-        mockMvc.perform(post("/board")
-                        .contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("/boards")
+                        .contentType(APPLICATION_JSON)
                         .content(json)
                 )
                 .andExpect(status().isOk())
-                .andDo(MockMvcResultHandlers.print());
+                .andDo(print());
 
         // then
         assertEquals(1L, boardRepository.count());
@@ -105,6 +107,27 @@ class BoardControllerTest {
         Board board = boardRepository.findAll().get(0);
         assertEquals("제목입니다.", board.getTitle());
         assertEquals("내용입니다.", board.getContent());
+    }
+
+    @Test
+    @DisplayName("글 1개 조회")
+    void search_one_board_test() throws Exception {
+        // given
+        Board board = Board.builder()
+                .title("제목")
+                .content("내용")
+                .build();
+        boardRepository.save(board);
+
+        // expected (when + then)
+        mockMvc.perform(get("/boards/{no}", board.getNo())
+                        .contentType(APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.no").value(board.getNo()))
+                .andExpect(jsonPath("$.title").value("제목"))
+                .andExpect(jsonPath("$.content").value("내용"))
+                .andDo(print());
+
     }
 
 }

@@ -36,9 +36,9 @@ public class BoardController {
     }
 
     // 글 1개 조회
-    @GetMapping("/boards/{boardId}")
-    public Board get(@PathVariable(name = "no") Long boardId) {
-        Board board = boardService.get(boardId);
+    @GetMapping("/boards/{no}")
+    public Board get(@PathVariable Long no) {
+        Board board = boardService.get(no);
         return board;
     }
 

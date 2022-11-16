@@ -21,7 +21,7 @@ public class BoardController {
 
     private final BoardService boardService;
 
-    @PostMapping("/board")
+    @PostMapping("/boards")
     public void board(@RequestBody @Valid BoardWrite request) {
         // Case1. 저장한 데이터 Entity -> response로 응답하기
         // Case2. 저장한 데이터의 primary_id ->response로 응답하기
@@ -34,5 +34,13 @@ public class BoardController {
 
         boardService.write(request);
     }
+
+    // 글 1개 조회
+    @GetMapping("/boards/{boardId}")
+    public Board get(@PathVariable(name = "no") Long boardId) {
+        Board board = boardService.get(boardId);
+        return board;
+    }
+
 
 }

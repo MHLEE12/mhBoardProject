@@ -1,19 +1,13 @@
 package com.mhboard.api.controller;
 
-import com.mhboard.api.domain.Board;
 import com.mhboard.api.request.BoardWrite;
 import com.mhboard.api.response.BoardResponse;
 import com.mhboard.api.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @RestController
@@ -36,12 +30,16 @@ public class BoardController {
         boardService.write(request);
     }
 
+
+
     // 글 1개 조회
-    @GetMapping("/boards/{no}")
+    @GetMapping("/board/{no}")
     public BoardResponse get(@PathVariable Long no) {
 
         return boardService.get(no);
     }
+
+
 
 
 }

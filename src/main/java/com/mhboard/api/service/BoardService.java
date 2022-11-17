@@ -41,11 +41,9 @@ public class BoardService {
 
     public List<BoardResponse> getList() {
         return boardRepository.findAll().stream()
-                .map(board -> BoardResponse.builder()
-                        .no(board.getNo())
-                        .title(board.getTitle())
-                        .content(board.getContent())
-                        .build())
+//                .map(board -> new BoardResponse(board))
+                // 위의 것을 밑의 코드로 표현
+                .map(BoardResponse::new)
                 .collect(Collectors.toList());
     }
 }

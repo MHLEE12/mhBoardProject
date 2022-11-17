@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -30,7 +31,11 @@ public class BoardController {
         boardService.write(request);
     }
 
-
+    // 여러개의 글 조회 API
+    @GetMapping("/boards")
+    public List<BoardResponse> getList() {
+        return boardService.getList();
+    }
 
     // 글 1개 조회
     @GetMapping("/board/{no}")

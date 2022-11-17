@@ -8,8 +8,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -30,12 +28,11 @@ public class BoardService {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글 입니다."));
 
-        BoardResponse response = BoardResponse.builder()
+        return BoardResponse.builder()
                 .no(board.getNo())
                 .title(board.getTitle())
                 .content(board.getContent())
                 .build();
 
-        return response;
     }
 }

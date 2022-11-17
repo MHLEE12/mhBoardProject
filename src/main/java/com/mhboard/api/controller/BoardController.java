@@ -40,8 +40,7 @@ public class BoardController {
     @GetMapping("/boards/{no}")
     public BoardResponse get(@PathVariable Long no) {
 
-        BoardResponse response = boardService.get(no);
-        return response;
+        return boardService.get(no);
     }
 
 

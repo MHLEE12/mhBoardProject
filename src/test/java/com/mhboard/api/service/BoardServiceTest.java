@@ -4,14 +4,16 @@ import com.mhboard.api.domain.Board;
 import com.mhboard.api.repository.BoardRepository;
 import com.mhboard.api.request.BoardWrite;
 import com.mhboard.api.response.BoardResponse;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 class BoardServiceTest {
@@ -64,6 +66,29 @@ class BoardServiceTest {
         assertEquals(1L, boardRepository.count());
         assertEquals("제목", response.getTitle());
         assertEquals("내용", response.getContent());
+    }
+
+    @Test
+    @DisplayName("글 여러개 조회")
+    void test3() {
+        // given
+        Board saveBoard1 = Board.builder()
+                .title("제목1")
+                .content("내용1")
+                .build();
+        boardRepository.save(saveBoard1);
+
+        Board saveBoard2 = Board.builder()
+                .title("제목2")
+                .content("내용2")
+                .build();
+        boardRepository.save(saveBoard2);
+
+        // when
+        List<BoardResponse> boards = boardService.getList();
+
+        //then
+        assertEquals(2L, boards.size());
     }
 
 

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mhboard.api.domain.Board;
 import com.mhboard.api.repository.BoardRepository;
 import com.mhboard.api.request.BoardWrite;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -128,7 +129,33 @@ class BoardControllerTest {
                 .andExpect(jsonPath("$.title").value("1234567890"))
                 .andExpect(jsonPath("$.content").value("내용"))
                 .andDo(print());
+    }
 
+    @Test
+    @DisplayName("글 여러개 조회")
+    void search_boards_test() throws Exception {
+        // given
+        Board board1 = Board.builder()
+                .title("title_1")
+                .content("content_1")
+                .build();
+        boardRepository.save(board1);
+
+        Board board2 = Board.builder()
+                .title("title_2")
+                .content("content_2")
+                .build();
+        boardRepository.save(board2);
+
+        // expected (when + then)
+        mockMvc.perform(get("/boards")
+                        .contentType(APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()", Matchers.is(2)))
+                .andExpect(jsonPath("$[0].no").value(board1.getNo()))
+                .andExpect(jsonPath("$[0].title").value("title_1"))
+                .andExpect(jsonPath("$[0].content").value("content_1"))
+                .andDo(print());
     }
 
 }

@@ -135,17 +135,15 @@ class BoardControllerTest {
     @DisplayName("글 여러개 조회")
     void search_boards_test() throws Exception {
         // given
-        Board board1 = Board.builder()
+        Board board1 = boardRepository.save(Board.builder()
                 .title("title_1")
                 .content("content_1")
-                .build();
-        boardRepository.save(board1);
+                .build());
 
-        Board board2 = Board.builder()
+        Board board2 = boardRepository.save(Board.builder()
                 .title("title_2")
                 .content("content_2")
-                .build();
-        boardRepository.save(board2);
+                .build());
 
         // expected (when + then)
         mockMvc.perform(get("/boards")
@@ -155,6 +153,9 @@ class BoardControllerTest {
                 .andExpect(jsonPath("$[0].no").value(board1.getNo()))
                 .andExpect(jsonPath("$[0].title").value("title_1"))
                 .andExpect(jsonPath("$[0].content").value("content_1"))
+                .andExpect(jsonPath("$[1].no").value(board2.getNo()))
+                .andExpect(jsonPath("$[1].title").value("title_2"))
+                .andExpect(jsonPath("$[1].content").value("content_2"))
                 .andDo(print());
     }
 

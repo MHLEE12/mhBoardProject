@@ -72,17 +72,16 @@ class BoardServiceTest {
     @DisplayName("글 여러개 조회")
     void test3() {
         // given
-        Board saveBoard1 = Board.builder()
-                .title("제목1")
-                .content("내용1")
-                .build();
-        boardRepository.save(saveBoard1);
-
-        Board saveBoard2 = Board.builder()
-                .title("제목2")
-                .content("내용2")
-                .build();
-        boardRepository.save(saveBoard2);
+        boardRepository.saveAll(List.of(
+                Board.builder()
+                        .title("제목1")
+                        .content("내용1")
+                        .build(),
+                Board.builder()
+                        .title("제목2")
+                        .content("내용2")
+                        .build()
+        ));
 
         // when
         List<BoardResponse> boards = boardService.getList();

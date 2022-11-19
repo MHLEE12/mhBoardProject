@@ -21,4 +21,6 @@ spring:
   data:
     web:
       pageable:
-        one-indexed-parameters: on
+        one-indexed-parameters: true
+#        페이징처리(5개씩 출력)
+        default-page-size: 5

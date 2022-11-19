@@ -6,6 +6,7 @@ import com.mhboard.api.request.BoardWrite;
 import com.mhboard.api.response.BoardResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,8 +40,8 @@ public class BoardService {
 
     }
 
-    public List<BoardResponse> getList() {
-        return boardRepository.findAll().stream()
+    public List<BoardResponse> getList(Pageable pageable) {
+        return boardRepository.findAll(pageable).stream()
 //                .map(board -> new BoardResponse(board))
                 // 위의 것을 밑의 코드로 표현
                 .map(BoardResponse::new)

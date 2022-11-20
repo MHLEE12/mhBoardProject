@@ -1,5 +1,6 @@
 package com.mhboard.api.controller;
 
+import com.mhboard.api.request.BoardSearch;
 import com.mhboard.api.request.BoardWrite;
 import com.mhboard.api.response.BoardResponse;
 import com.mhboard.api.service.BoardService;
@@ -34,10 +35,9 @@ public class BoardController {
 
     // 여러개의 글 조회 API
     @GetMapping("/boards")
-    public List<BoardResponse> getList(Pageable pageable) {
-//        @PageableDefault - 를 쓰면 기본 10개씩 가져와짐
+    public List<BoardResponse> getList(@RequestParam BoardSearch boardSearch) {
 
-        return boardService.getList(pageable);
+        return boardService.getList(boardSearch);
     }
 
     // 글 1개 조회

@@ -2,6 +2,7 @@ package com.mhboard.api.service;
 
 import com.mhboard.api.domain.Board;
 import com.mhboard.api.repository.BoardRepository;
+import com.mhboard.api.request.BoardSearch;
 import com.mhboard.api.request.BoardWrite;
 import com.mhboard.api.response.BoardResponse;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,9 +10,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -77,7 +75,7 @@ class BoardServiceTest {
     @DisplayName("글 1페이지 조회")
     void test3() {
         // given
-        List<Board> requestBoards = IntStream.range(1, 31)
+        List<Board> requestBoards = IntStream.range(0, 20)
                         .mapToObj(i -> Board.builder()
                                 .title("게시글 제목 " + i)
                                 .content("게시글 내용 " + i)
@@ -85,15 +83,17 @@ class BoardServiceTest {
                         .collect(Collectors.toList());
         boardRepository.saveAll(requestBoards);
 
-        Pageable pageable = PageRequest.of(0, 5, Sort.Direction.DESC, "no");
+        BoardSearch boardSearch = BoardSearch.builder()
+                .page(1)
+                .size(10)
+                .build();
 
         // when
-        List<BoardResponse> boards = boardService.getList(pageable);
+        List<BoardResponse> boards = boardService.getList(boardSearch);
 
         //then
-        assertEquals(5L, boards.size());
-        assertEquals("게시글 제목 30", boards.get(0).getTitle());
-        assertEquals("게시글 제목 26", boards.get(4).getTitle());
+        assertEquals(10L, boards.size());
+        assertEquals("게시글 제목 19", boards.get(0).getTitle());
     }
 
 

@@ -2,11 +2,11 @@ package com.mhboard.api.service;
 
 import com.mhboard.api.domain.Board;
 import com.mhboard.api.repository.BoardRepository;
+import com.mhboard.api.request.BoardSearch;
 import com.mhboard.api.request.BoardWrite;
 import com.mhboard.api.response.BoardResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,8 +40,8 @@ public class BoardService {
 
     }
 
-    public List<BoardResponse> getList(Pageable pageable) {
-        return boardRepository.findAll(pageable).stream()
+    public List<BoardResponse> getList(BoardSearch boardSearch) {
+        return boardRepository.getList(boardSearch).stream()
 //                .map(board -> new BoardResponse(board))
                 // 위의 것을 밑의 코드로 표현
                 .map(BoardResponse::new)

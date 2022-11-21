@@ -139,7 +139,7 @@ class BoardControllerTest {
     @DisplayName("글 여러개 조회")
     void search_boards_test() throws Exception {
         // given
-        List<Board> requestBoards = IntStream.range(1, 31)
+        List<Board> requestBoards = IntStream.range(0, 20)
                 .mapToObj(i -> Board.builder()
                         .title("게시글 제목 " + i)
                         .content("게시글 내용 " + i)
@@ -148,14 +148,15 @@ class BoardControllerTest {
         boardRepository.saveAll(requestBoards);
 
         // expected (when + then)
-        mockMvc.perform(get("/boards?page=1&sort=no,desc")
+        mockMvc.perform(get("/boards?page=1&size=10")
                         .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()", is(5)))
-                .andExpect(jsonPath("$[0].no").value(30))
-                .andExpect(jsonPath("$[0].title").value("게시글 제목 30"))
-                .andExpect(jsonPath("$[0].content").value("게시글 내용 30"))
+                .andExpect(jsonPath("$.length()", is(10)))
+                .andExpect(jsonPath("$[0].no").value(20))
+                .andExpect(jsonPath("$[0].title").value("게시글 제목 19"))
+                .andExpect(jsonPath("$[0].content").value("게시글 내용 19"))
                 .andDo(print());
     }
+
 
 }

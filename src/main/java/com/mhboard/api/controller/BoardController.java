@@ -6,7 +6,6 @@ import com.mhboard.api.response.BoardResponse;
 import com.mhboard.api.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -35,7 +34,7 @@ public class BoardController {
 
     // 여러개의 글 조회 API
     @GetMapping("/boards")
-    public List<BoardResponse> getList(@RequestParam BoardSearch boardSearch) {
+    public List<BoardResponse> getList(@ModelAttribute BoardSearch boardSearch) {
 
         return boardService.getList(boardSearch);
     }

@@ -6,14 +6,18 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@Builder
 public class BoardSearch {
 
-    private int page;
-    private int size; // page size - 한 페이지당 몇개의 글
+    @Builder.Default
+    private Integer page = 1;
 
-    @Builder
-    public BoardSearch(int page, int size) {
-        this.page = page;
-        this.size = size;
+    @Builder.Default
+    private Integer size = 10;
+    // page size - 한 페이지당 10개의 글
+
+    public long getOffset() {
+        return (long) (page - 1) * size;
     }
+
 }

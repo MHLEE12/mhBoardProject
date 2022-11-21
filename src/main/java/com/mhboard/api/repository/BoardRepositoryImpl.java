@@ -18,7 +18,7 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
         // 10개만 가져오는 쿼리
         return jpaQueryFactory.selectFrom(QBoard.board)
                 .limit(boardSearch.getSize())
-                .offset((long) (boardSearch.getPage() - 1) * boardSearch.getSize())
+                .offset(boardSearch.getOffset())
                 .orderBy(QBoard.board.no.desc())
                 .fetch();
     }

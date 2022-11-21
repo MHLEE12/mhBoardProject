@@ -9,6 +9,8 @@ import lombok.Setter;
 @Builder
 public class BoardSearch {
 
+    private static final int MAX_SIZE = 2000;
+
     @Builder.Default
     private Integer page = 1;
 
@@ -17,7 +19,7 @@ public class BoardSearch {
     // page size - 한 페이지당 10개의 글
 
     public long getOffset() {
-        return (long) (page - 1) * size;
+        return (long) (Math.max(1, page) - 1) * Math.min(size, 2000);
     }
 
 }

@@ -158,5 +158,28 @@ class BoardControllerTest {
                 .andDo(print());
     }
 
+    @Test
+    @DisplayName("페이지를 0으로 요청하면 첫 페이지를 가져온다.")
+    void boards_page_test() throws Exception {
+        // given
+        List<Board> requestBoards = IntStream.range(0, 20)
+                .mapToObj(i -> Board.builder()
+                        .title("게시글 제목 " + i)
+                        .content("게시글 내용 " + i)
+                        .build())
+                .collect(Collectors.toList());
+        boardRepository.saveAll(requestBoards);
+
+        // expected (when + then)
+        mockMvc.perform(get("/boards?page=0&size=10")
+                        .contentType(APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()", is(10)))
+                .andExpect(jsonPath("$[0].no").value(20))
+                .andExpect(jsonPath("$[0].title").value("게시글 제목 19"))
+                .andExpect(jsonPath("$[0].content").value("게시글 내용 19"))
+                .andDo(print());
+    }
+
 
 }

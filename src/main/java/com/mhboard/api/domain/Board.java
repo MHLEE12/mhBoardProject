@@ -24,5 +24,9 @@ public class Board {
         this.content = content;
     }
 
+    public void change(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 
 }

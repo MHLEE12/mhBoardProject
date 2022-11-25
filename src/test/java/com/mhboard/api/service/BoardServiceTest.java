@@ -119,6 +119,7 @@ class BoardServiceTest {
                 .orElseThrow(() -> new RuntimeException("글이 존재하지 않습니다. no= " + board.getNo()));
 
         assertEquals("수정 테스트", changeBoard.getTitle());
+        assertEquals("내용", changeBoard.getContent());
     }
 
 

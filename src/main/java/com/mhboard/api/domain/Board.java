@@ -24,9 +24,15 @@ public class Board {
         this.content = content;
     }
 
-    public void change(String title, String content) {
-        this.title = title;
-        this.content = content;
+    public BoardEditor.BoardEditorBuilder toEditor() {
+        // board service에서 build fix하기 위해 여기서 fix하지 않고 보냄
+         return BoardEditor.builder()
+                .title(title)
+                .content(content);
     }
 
+    public void edit(BoardEditor boardEditor) {
+        title = boardEditor.getTitle();
+        content = boardEditor.getContent();
+    }
 }

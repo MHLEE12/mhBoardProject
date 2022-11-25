@@ -1,6 +1,7 @@
 package com.mhboard.api.service;
 
 import com.mhboard.api.domain.Board;
+import com.mhboard.api.domain.BoardEditor;
 import com.mhboard.api.repository.BoardRepository;
 import com.mhboard.api.request.BoardEdit;
 import com.mhboard.api.request.BoardSearch;
@@ -54,7 +55,13 @@ public class BoardService {
     public void edit(Long no, BoardEdit boardEdit) {
         Board board = boardRepository.findById(no)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글 입니다."));
-        board.change(boardEdit.getTitle(), boardEdit.getContent());
 
+        BoardEditor.BoardEditorBuilder editorBuilder = board.toEditor();
+
+        BoardEditor boardEditor = editorBuilder.title(boardEdit.getTitle())
+                .content(boardEdit.getContent())
+                .build();
+
+        board.edit(boardEditor);
     }
 }

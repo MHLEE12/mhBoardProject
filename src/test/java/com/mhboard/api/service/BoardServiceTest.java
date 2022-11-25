@@ -2,6 +2,7 @@ package com.mhboard.api.service;
 
 import com.mhboard.api.domain.Board;
 import com.mhboard.api.repository.BoardRepository;
+import com.mhboard.api.request.BoardEdit;
 import com.mhboard.api.request.BoardSearch;
 import com.mhboard.api.request.BoardWrite;
 import com.mhboard.api.response.BoardResponse;
@@ -76,11 +77,11 @@ class BoardServiceTest {
     void test3() {
         // given
         List<Board> requestBoards = IntStream.range(0, 20)
-                        .mapToObj(i -> Board.builder()
-                                .title("게시글 제목 " + i)
-                                .content("게시글 내용 " + i)
-                                .build())
-                        .collect(Collectors.toList());
+                .mapToObj(i -> Board.builder()
+                        .title("게시글 제목 " + i)
+                        .content("게시글 내용 " + i)
+                        .build())
+                .collect(Collectors.toList());
         boardRepository.saveAll(requestBoards);
 
         BoardSearch boardSearch = BoardSearch.builder()
@@ -94,6 +95,30 @@ class BoardServiceTest {
         //then
         assertEquals(10L, boards.size());
         assertEquals("게시글 제목 19", boards.get(0).getTitle());
+    }
+
+    @Test
+    @DisplayName("글 제목 수정")
+    void test4() {
+        // given
+        Board board = Board.builder()
+                .title("제목")
+                .content("내용")
+                .build();
+        boardRepository.save(board);
+
+        BoardEdit boardEdit = BoardEdit.builder()
+                .title("수정 테스트")
+                .build();
+
+        // when
+        boardService.edit(board.getNo(), boardEdit);
+
+        //then
+        Board changeBoard = boardRepository.findById(board.getNo())
+                .orElseThrow(() -> new RuntimeException("글이 존재하지 않습니다. no= " + board.getNo()));
+
+        assertEquals("수정 테스트", changeBoard.getTitle());
     }
 
 

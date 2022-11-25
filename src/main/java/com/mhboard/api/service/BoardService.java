@@ -2,12 +2,14 @@ package com.mhboard.api.service;
 
 import com.mhboard.api.domain.Board;
 import com.mhboard.api.repository.BoardRepository;
+import com.mhboard.api.request.BoardEdit;
 import com.mhboard.api.request.BoardSearch;
 import com.mhboard.api.request.BoardWrite;
 import com.mhboard.api.response.BoardResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,5 +48,13 @@ public class BoardService {
                 // 위의 것을 밑의 코드로 표현
                 .map(BoardResponse::new)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void edit(Long no, BoardEdit boardEdit) {
+        Board board = boardRepository.findById(no)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글 입니다."));
+        board.change(boardEdit.getTitle(), boardEdit.getContent());
+
     }
 }

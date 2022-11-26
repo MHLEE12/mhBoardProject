@@ -109,6 +109,7 @@ class BoardServiceTest {
 
         BoardEdit boardEdit = BoardEdit.builder()
                 .title("수정 테스트")
+                .content("내용")
                 .build();
 
         // when
@@ -122,5 +123,29 @@ class BoardServiceTest {
         assertEquals("내용", changeBoard.getContent());
     }
 
+    @Test
+    @DisplayName("글 내용 수정")
+    void test5() {
+        // given
+        Board board = Board.builder()
+                .title("제목")
+                .content("내용")
+                .build();
+        boardRepository.save(board);
+
+        BoardEdit boardEdit = BoardEdit.builder()
+                .title("제목")
+                .content("내용 수정 테스트")
+                .build();
+
+        // when
+        boardService.edit(board.getNo(), boardEdit);
+
+        //then
+        Board changeBoard = boardRepository.findById(board.getNo())
+                .orElseThrow(() -> new RuntimeException("글이 존재하지 않습니다. no= " + board.getNo()));
+
+        assertEquals("내용 수정 테스트", changeBoard.getContent());
+    }
 
 }

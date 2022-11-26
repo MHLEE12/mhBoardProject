@@ -1,5 +1,6 @@
 package com.mhboard.api.controller;
 
+import com.mhboard.api.request.BoardEdit;
 import com.mhboard.api.request.BoardSearch;
 import com.mhboard.api.request.BoardWrite;
 import com.mhboard.api.response.BoardResponse;
@@ -40,12 +41,16 @@ public class BoardController {
     }
 
     // 글 1개 조회
-    @GetMapping("/board/{no}")
+    @GetMapping("/boards/{no}")
     public BoardResponse get(@PathVariable Long no) {
 
         return boardService.get(no);
     }
 
+    @PatchMapping("/boards/{boardNo}")
+    public void edit(@PathVariable Long boardNo, @RequestBody @Valid BoardEdit request) {
+        boardService.edit(boardNo, request);
+    }
 
 
 

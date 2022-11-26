@@ -3,6 +3,7 @@ package com.mhboard.api.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mhboard.api.domain.Board;
 import com.mhboard.api.repository.BoardRepository;
+import com.mhboard.api.request.BoardEdit;
 import com.mhboard.api.request.BoardWrite;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,8 +20,7 @@ import java.util.stream.IntStream;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -126,7 +126,7 @@ class BoardControllerTest {
         boardRepository.save(board);
 
         // expected (when + then)
-        mockMvc.perform(get("/board/{no}", board.getNo())
+        mockMvc.perform(get("/boards/{no}", board.getNo())
                         .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.no").value(board.getNo()))
@@ -178,6 +178,30 @@ class BoardControllerTest {
                 .andExpect(jsonPath("$[0].no").value(20))
                 .andExpect(jsonPath("$[0].title").value("게시글 제목 19"))
                 .andExpect(jsonPath("$[0].content").value("게시글 내용 19"))
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("글 제목 수정")
+    void board_modify_test() throws Exception {
+        // given
+        Board board = Board.builder()
+                .title("제목")
+                .content("내용")
+                .build();
+        boardRepository.save(board);
+
+        BoardEdit boardEdit = BoardEdit.builder()
+                .title("제목 수정 테스트")
+                .content("내용")
+                .build();
+
+        // expected (when + then)
+        mockMvc.perform(patch("/boards/{no}", board.getNo())
+                        .contentType(APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(boardEdit))
+                )
+                .andExpect(status().isOk())
                 .andDo(print());
     }
 

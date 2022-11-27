@@ -35,4 +35,5 @@ public class Board {
         title = boardEditor.getTitle();
         content = boardEditor.getContent();
     }
+
 }

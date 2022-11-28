@@ -64,4 +64,11 @@ public class BoardService {
 
         board.edit(boardEditor);
     }
+
+    public void delete(Long no) {
+        Board board = boardRepository.findById(no)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글입니다."));
+
+        boardRepository.delete(board);
+    }
 }

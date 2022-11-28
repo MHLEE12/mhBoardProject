@@ -205,5 +205,22 @@ class BoardControllerTest {
                 .andDo(print());
     }
 
+    @Test
+    @DisplayName("게시글 삭제")
+    void board_delete() throws Exception {
+        // given
+        Board board = Board.builder()
+                .title("제목")
+                .content("내용")
+                .build();
+        boardRepository.save(board);
+
+        // expected
+        mockMvc.perform(delete("/boards/{no}", board.getNo())
+                        .contentType(APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
+
+    }
 
 }

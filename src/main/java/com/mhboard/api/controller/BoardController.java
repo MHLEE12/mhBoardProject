@@ -52,6 +52,9 @@ public class BoardController {
         boardService.edit(boardNo, request);
     }
 
-
+    @DeleteMapping("/boards/{no}")
+    public void delete(@PathVariable Long no) {
+        boardService.delete(no);
+    }
 
 }

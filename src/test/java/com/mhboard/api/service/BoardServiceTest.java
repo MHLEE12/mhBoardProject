@@ -147,7 +147,6 @@ class BoardServiceTest {
 
         assertEquals("내용 수정 테스트", changeBoard.getContent());
     }
-
     @Test
     @DisplayName("글 내용 수정")
     void test6() {
@@ -172,6 +171,23 @@ class BoardServiceTest {
 
         assertEquals("제목", changeBoard.getTitle());
         assertEquals("내용 수정 테스트", changeBoard.getContent());
+    }
+
+    @Test
+    @DisplayName("게시글 삭제")
+    void test7() {
+        // given
+        Board board = Board.builder()
+                .title("제목")
+                .content("내용")
+                .build();
+        boardRepository.save(board);
+
+        // when
+        boardService.delete(board.getNo());
+
+        // then
+        assertEquals(0, boardRepository.count());
     }
 
 }

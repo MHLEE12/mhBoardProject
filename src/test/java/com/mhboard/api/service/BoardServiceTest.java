@@ -1,6 +1,7 @@
 package com.mhboard.api.service;
 
 import com.mhboard.api.domain.Board;
+import com.mhboard.api.exception.BoardNotFound;
 import com.mhboard.api.repository.BoardRepository;
 import com.mhboard.api.request.BoardEdit;
 import com.mhboard.api.request.BoardSearch;
@@ -200,11 +201,10 @@ class BoardServiceTest {
         boardRepository.save(board);
 
         // expected
-        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(BoardNotFound.class, () -> {
            boardService.get(board.getNo() + 1L);
         });
 
-        assertEquals("존재하지 않는 글 입니다.", e.getMessage());
 
 //        assertThrows(IllegalArgumentException.class, () -> {
 //           boardService.get(board.getNo() + 1L);

@@ -2,6 +2,7 @@ package com.mhboard.api.service;
 
 import com.mhboard.api.domain.Board;
 import com.mhboard.api.domain.BoardEditor;
+import com.mhboard.api.exception.BoardNotFound;
 import com.mhboard.api.repository.BoardRepository;
 import com.mhboard.api.request.BoardEdit;
 import com.mhboard.api.request.BoardSearch;
@@ -33,7 +34,7 @@ public class BoardService {
 
     public BoardResponse get(Long boardId) {
         Board board = boardRepository.findById(boardId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글 입니다."));
+                .orElseThrow(BoardNotFound::new);
 
         return BoardResponse.builder()
                 .no(board.getNo())

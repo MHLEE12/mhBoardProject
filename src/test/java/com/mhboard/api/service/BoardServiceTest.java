@@ -16,8 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class BoardServiceTest {
@@ -188,6 +187,37 @@ class BoardServiceTest {
 
         // then
         assertEquals(0, boardRepository.count());
+    }
+
+    @Test
+    @DisplayName("글 1개 조회 예외 테스트")
+    void test8() {
+        // given
+        Board board = Board.builder()
+                .title("제목")
+                .content("내용")
+                .build();
+        boardRepository.save(board);
+
+        // expected
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> {
+           boardService.get(board.getNo() + 1L);
+        });
+
+        assertEquals("존재하지 않는 글 입니다.", e.getMessage());
+
+//        assertThrows(IllegalArgumentException.class, () -> {
+//           boardService.get(board.getNo() + 1L);
+//        }, "예외처리가 잘못되었습니다.");
+
+//        assertThrows(NullPointerException.class, () -> {
+//           boardService.get(board.getNo() + 1L);
+//        }, "예외처리가 잘못되었습니다.");
+
+
+
+
+
     }
 
 }

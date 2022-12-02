@@ -191,7 +191,7 @@ class BoardServiceTest {
     }
 
     @Test
-    @DisplayName("글 1개 조회 예외 테스트")
+    @DisplayName("글 1개 조회 - 존재하지 않는 글")
     void test8() {
         // given
         Board board = Board.builder()
@@ -205,7 +205,6 @@ class BoardServiceTest {
            boardService.get(board.getNo() + 1L);
         });
 
-
 //        assertThrows(IllegalArgumentException.class, () -> {
 //           boardService.get(board.getNo() + 1L);
 //        }, "예외처리가 잘못되었습니다.");
@@ -214,10 +213,22 @@ class BoardServiceTest {
 //           boardService.get(board.getNo() + 1L);
 //        }, "예외처리가 잘못되었습니다.");
 
+    }
 
+    @Test
+    @DisplayName("게시글 삭제 - 존재하지 않는 글")
+    void test9() {
+        // given
+        Board board = Board.builder()
+                .title("제목")
+                .content("내용")
+                .build();
+        boardRepository.save(board);
 
-
-
+        // expected
+        assertThrows(BoardNotFound.class, () -> {
+            boardService.delete(board.getNo() + 1L);
+        });
     }
 
 }

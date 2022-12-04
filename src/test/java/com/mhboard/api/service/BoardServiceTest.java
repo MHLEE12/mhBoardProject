@@ -231,4 +231,24 @@ class BoardServiceTest {
         });
     }
 
+    @Test
+    @DisplayName("글 내용 수정 - 존재하지 않는 글")
+    void test10() {
+        // given
+        Board board = Board.builder()
+                .title("제목")
+                .content("내용")
+                .build();
+        boardRepository.save(board);
+
+        BoardEdit boardEdit = BoardEdit.builder()
+                .title(null)
+                .content("내용 수정 테스트")
+                .build();
+
+        // expected
+        assertThrows(BoardNotFound.class, () -> {
+            boardService.edit(board.getNo() + 1L, boardEdit);
+        });
+    }
 }

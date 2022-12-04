@@ -55,7 +55,7 @@ public class BoardService {
     @Transactional
     public void edit(Long no, BoardEdit boardEdit) {
         Board board = boardRepository.findById(no)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글 입니다."));
+                .orElseThrow(BoardNotFound::new);
 
         BoardEditor.BoardEditorBuilder editorBuilder = board.toEditor();
 
@@ -68,7 +68,7 @@ public class BoardService {
 
     public void delete(Long no) {
         Board board = boardRepository.findById(no)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글입니다."));
+                .orElseThrow(BoardNotFound::new);
 
         boardRepository.delete(board);
     }

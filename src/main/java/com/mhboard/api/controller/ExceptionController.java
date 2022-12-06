@@ -1,14 +1,12 @@
 package com.mhboard.api.controller;
 
+import com.mhboard.api.exception.BoardNotFound;
 import com.mhboard.api.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 
 
 @Slf4j
@@ -31,5 +29,18 @@ public class ExceptionController {
 
         return response;
     }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(BoardNotFound.class)
+    public ErrorResponse boardNotFound(BoardNotFound e) {
+        ErrorResponse response = ErrorResponse.builder()
+                .code("404")
+                .message(e.getMessage())
+                .build();
+        return response;
+    }
+
+
 
 }

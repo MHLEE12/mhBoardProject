@@ -229,7 +229,7 @@ class BoardControllerTest {
         // expected
         mockMvc.perform(delete("/boards/{no}", 1L)
                         .contentType(APPLICATION_JSON))
-                .andExpect(status().isOk())
+                .andExpect(status().isNotFound())
                 .andDo(print());
     }
 
